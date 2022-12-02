@@ -5,7 +5,7 @@
   "homepage": "https://github.com/Kop1tes/goit-js-hw-08",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html --public-url /parcel-project-template/"
+    "build": "parcel build src/index.html --public-url /goit-js-hw-08/"
   },
   "repository": {
     "type": "git",

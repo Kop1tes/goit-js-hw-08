@@ -7,34 +7,37 @@ const refs = {
 }; 
 
 const LOCAL_STORAGE_KEY = 'feedback-form-state';
-const formData = {};
+let  formData = {};
 
 
-refs.form.addEventListener('submit', onFormSubmit); 
-refs.form.addEventListener('input',throttle(onInput, 500));;
+refs.form.addEventListener('submit', throttle(onFormSubmit, 500)); 
+refs.form.addEventListener('input', onInput);
 
 
 function onInput(e) { 
     formData[e.target.name] = e.target.value;
-    localStorage.setItem(LOCAL_STORAGE_KEY , JSON.stringify(formData));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(formData));
 
 };
 
+populateData(); 
+
 function onFormSubmit(e) { 
     e.preventDefault();
-    console.log(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))); 
+    // console.log(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))); 
     e.currentTarget.reset(); 
-    localStorage.removeItem(LOCAL_STORAGE_KEY)
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
 
 };  
 
-populateData(); 
 function populateData() {
-    const parseData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+    const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const parseData = JSON.parse(savedData);
     if (parseData) {
+        formData = parseData;
+        refs.textarea.value = parseData.message || '';
+        refs.email.value = parseData.email || '';
         console.log(parseData);
-      refs.textarea.value = parseData.message;
-      refs.email.value = parseData.email;
     }
   }
   

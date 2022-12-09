@@ -44,14 +44,15 @@ refs.feedbackFormEl.addEventListener("submit", onFeedbackFormReset);
 
 function onFeedbackFormReset(e) {
   e.preventDefault();
-  console.log(feedbackFormObject);
-  // let parsedLocalStorageObject = JSON.parse(localStorage.getItem("feedback-form-state"));
+  const { email, message } = e.target.elements;
+  if (email.value.trim() === '' || message.value.trim() === '') {
+    alert('Заповнiть всi поля форми');
+    return;
+  }
 
-  // if (parsedLocalStorageObject) {
-  //   console.log(parsedLocalStorageObject);
-  // }
+  console.log(feedbackFormObject);
 
   refs.feedbackFormEl.reset();
-  // localStorage.removeItem("feedback-form-state");
+  localStorage.removeItem("feedback-form-state");
   feedbackFormObject = {};
 }

@@ -6,7 +6,7 @@ const refs = {
     textareaEl: document.querySelector("textarea[name=message]"),
 };
 
-let feedbackFormObject = {};
+let feedbackFormObject = JSON.parse(localStorage.getItem("feedback-form-state")) || {};
 
 refs.feedbackFormEl.addEventListener("input", throttler(onFeedbackFormInput, 500));
 
@@ -24,31 +24,34 @@ function onFeedbackFormReplay() {
     return;
     }
 
-    let parsedLocalStorageObject = JSON.parse(localStorage.getItem("feedback-form-state"));
+  let parsedLocalStorageObject = JSON.parse(localStorage.getItem("feedback-form-state"));
+  
+  refs.inputEmailEl.value = parsedLocalStorageObject.email || '';
+  refs.textareaEl.value = parsedLocalStorageObject.message || '';
 
-    if (parsedLocalStorageObject.email) {
-    feedbackFormObject.email = parsedLocalStorageObject.email;
-    refs.inputEmailEl.value = parsedLocalStorageObject.email;
-  }
+  //   if (parsedLocalStorageObject.email) {
+  //   feedbackFormObject.email = parsedLocalStorageObject.email;
+  //   refs.inputEmailEl.value = parsedLocalStorageObject.email;
+  // }
 
-  if (parsedLocalStorageObject.message) {
-    feedbackFormObject.message = parsedLocalStorageObject.message;
-    refs.textareaEl.value = parsedLocalStorageObject.message;
-  }
+  // if (parsedLocalStorageObject.message) {
+  //   feedbackFormObject.message = parsedLocalStorageObject.message;
+  //   refs.textareaEl.value = parsedLocalStorageObject.message;
+  // }
 }
 
 refs.feedbackFormEl.addEventListener("submit", onFeedbackFormReset);
 
 function onFeedbackFormReset(e) {
   e.preventDefault();
+  console.log(feedbackFormObject);
+  // let parsedLocalStorageObject = JSON.parse(localStorage.getItem("feedback-form-state"));
 
-  let parsedLocalStorageObject = JSON.parse(localStorage.getItem("feedback-form-state"));
-
-  if (parsedLocalStorageObject) {
-    console.log(parsedLocalStorageObject);
-  }
+  // if (parsedLocalStorageObject) {
+  //   console.log(parsedLocalStorageObject);
+  // }
 
   refs.feedbackFormEl.reset();
-  localStorage.removeItem("feedback-form-state");
+  // localStorage.removeItem("feedback-form-state");
   feedbackFormObject = {};
 }
